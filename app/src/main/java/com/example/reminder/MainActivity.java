@@ -12,5 +12,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //HELLO THERE TRAVELER REST BY THE BONFIRE AND HERE MY TALE OF DESPAIR
+
+        //thats dumb
+
+        //test
     }
 }
