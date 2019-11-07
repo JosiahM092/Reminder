@@ -47,5 +47,49 @@
         </Button>
     </LinearLayout>
 
+    <DatePicker
+        android:id="@+id/changeDatePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone"
+        >
+
+    </DatePicker>
+
+    <Button
+        android:id="@+id/confirmDateBtn"
+        android:text="Confirm Date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/changeDatePicker"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone">
+    </Button>
+
+    <TimePicker
+        android:id="@+id/changeTimePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone"
+        >
+    </TimePicker>
+
+    <Button
+        android:id="@+id/confirmTimeBtn"
+        android:text="Confirm Time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/changeTimePicker"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+       >
+    </Button>
+
+
+
 
 </RelativeLayout>

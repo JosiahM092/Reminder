@@ -31,11 +31,24 @@ public class MainActivity extends AppCompatActivity {
         MyAdapter adapter = new MyAdapter(this, allReminders);
         ListView listView = findViewById(R.id.reminderListView);
         listView.setAdapter(adapter);
+
+        Button addNewBtn = (Button)findViewById(R.id.addNewBtn);
+        addNewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toNewReminderScreen(v);
+            }
+        });
     }
 
     public void toEditScreen(View view, ArrayList<Remind> reminders, int num) {
         Intent intent = new Intent(this, EditReminder.class);
         intent.putExtra("reminder", reminders.get(num));
+        startActivity(intent);
+    }
+
+    public void toNewReminderScreen(View view){
+        Intent intent = new Intent(this, EditReminder.class);
         startActivity(intent);
     }
 

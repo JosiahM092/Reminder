@@ -14,7 +14,7 @@
         android:layout_marginLeft="50dp">
 
         <Button
-            android:id="@+id/addNewBtm"
+            android:id="@+id/addNewBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Add New Reminder"
