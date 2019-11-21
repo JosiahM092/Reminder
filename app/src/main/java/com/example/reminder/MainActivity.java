@@ -18,15 +18,15 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private ArrayList<Remind> allReminders;
+    private Context theContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        theContext = getApplicationContext();
 
         allReminders = new ArrayList<Remind>();
-        Remind test = new Remind("Testing", "3:00", "12:00");
-        allReminders.add(test);
 
         MyAdapter adapter = new MyAdapter(this, allReminders);
         ListView listView = findViewById(R.id.reminderListView);
@@ -36,7 +36,9 @@ public class MainActivity extends AppCompatActivity {
         addNewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toNewReminderScreen(v);
+                //toNewReminderScreen(v);
+                Intent intent = new Intent(theContext, NewReminder.class);
+                startActivity(intent);
             }
         });
     }
@@ -47,10 +49,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void toNewReminderScreen(View view){
-        Intent intent = new Intent(this, EditReminder.class);
+   /* public void toNewReminderScreen(View view){
+        Intent intent = new Intent(this, NewReminder.class);
         startActivity(intent);
-    }
+    }*/
 
     public class MyAdapter extends BaseAdapter {
 

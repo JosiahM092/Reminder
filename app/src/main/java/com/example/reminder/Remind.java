@@ -11,10 +11,9 @@ public class Remind implements Serializable {
     private String timeSet;
     private String dateSet;
 
-    public Remind(String m, String a, String t){
-        message = m;
-        alarmTime = a;
-        timeSet = t;
+    public Remind(){
+        //timeSet = "null";
+        //dateSet = "null";
     }
 
     public Remind(String m, String ds, String ts, String ad, String at){
