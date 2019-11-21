@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/editTextMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter message" />
+
+    <Button
+        android:id="@+id/messageBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextMessage"
+        android:layout_marginTop="22dp"
+        android:text="Confirm message">
+
+    </Button>
+
+    <DatePicker
+        android:id="@+id/datePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="invisible"
+        />
+
+    <Button
+        android:id="@+id/datePickerBtn"
+        android:text="Confirm date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_below="@id/datePicker"
+        android:visibility="invisible"
+        />
+
+
+    <TimePicker
+        android:id="@+id/timePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="invisible"
+        />
+
+    <Button
+        android:id="@+id/timePickerBtn"
+        android:text="Confirm time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_below="@id/timePicker"
+        android:visibility="invisible"
+        />
+
+    <Button
+        android:id="@+id/setRemindBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/editTextMessage"
+        android:layout_alignLeft="@+id/editTextMessage"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="587dp"
+        android:text="Confirm Remind"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/datePickerRemind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:layout_marginBottom="300dp"
+        />
+
+    <Button
+        android:id="@+id/timePickerRemind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/datePickerRemind"
+        android:layout_marginTop="128dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="100dp"
+        android:visibility="invisible" />
+
+
+</RelativeLayout>
