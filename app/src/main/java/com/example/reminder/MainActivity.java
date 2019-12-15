@@ -5,20 +5,30 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ArrayList<Remind> allReminders;
-    private Context theContext;
+    Context theContext;
+    ListView listView;
+    MyAdapter adapter;
+    TextView message, alarmTime;
+    ImageView addNewIcon, deleteIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,33 +36,60 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         theContext = getApplicationContext();
 
-        allReminders = new ArrayList<Remind>();
+        AllReminders.getInstance().overide(readFromInternalStorage());
+        AllReminders.getInstance().removeAllDeleteIcons();
 
-        MyAdapter adapter = new MyAdapter(this, allReminders);
-        ListView listView = findViewById(R.id.reminderListView);
+
+
+        adapter = new MyAdapter(this, AllReminders.getInstance().getArray());
+        listView = findViewById(R.id.reminderListView);
         listView.setAdapter(adapter);
 
-        Button addNewBtn = (Button)findViewById(R.id.addNewBtn);
-        addNewBtn.setOnClickListener(new View.OnClickListener() {
+        addNewIcon = findViewById(R.id.add_icon);
+        addNewIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //toNewReminderScreen(v);
+                AllReminders.getInstance().removeAllDeleteIcons();
                 Intent intent = new Intent(theContext, NewReminder.class);
                 startActivity(intent);
             }
         });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                AllReminders.getInstance().getArray().get(position).setDeleteIconVisibility(View.VISIBLE);
+                adapter.notifyDataSetChanged();
+                return true;
+            }
+        });
+
     }
 
-    public void toEditScreen(View view, ArrayList<Remind> reminders, int num) {
+    public ArrayList<Remind> readFromInternalStorage() {
+        ArrayList<Remind> toReturn = new ArrayList<Remind>();
+        FileInputStream fis;
+        try {
+            fis = theContext.openFileInput("all");
+            ObjectInputStream oi = new ObjectInputStream(fis);
+            toReturn = (ArrayList)oi.readObject();
+            oi.close();
+        } catch (FileNotFoundException e) {
+            Log.e("InternalStorage", e.getMessage());
+        } catch (IOException e) {
+            Log.e("InternalStorage", e.getMessage());
+        } catch (ClassNotFoundException e){
+
+        }
+        return toReturn;
+    }
+
+    public void toEditScreen(int num) {
+        AllReminders.getInstance().removeAllDeleteIcons();
         Intent intent = new Intent(this, EditReminder.class);
-        intent.putExtra("reminder", reminders.get(num));
+        intent.putExtra("position", num);
         startActivity(intent);
     }
-
-   /* public void toNewReminderScreen(View view){
-        Intent intent = new Intent(this, NewReminder.class);
-        startActivity(intent);
-    }*/
 
     public class MyAdapter extends BaseAdapter {
 
@@ -65,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         public int getCount(){
+            if(theData == null) return 0;
             return theData.size();
         }
 
@@ -85,19 +123,29 @@ public class MainActivity extends AppCompatActivity {
                 convertView = LayoutInflater.from(context).inflate(R.layout.existing_reminder, parent, false);
             }
 
-            TextView message = (TextView) convertView.findViewById(R.id.message);
-            TextView alarmTime = (TextView) convertView.findViewById(R.id.alarmTime);
-            Button editBtn = (Button) convertView.findViewById(R.id.editBtn);
-
-            message.setText(theData.get(position).getMessage());
-            alarmTime.setText(theData.get(position).getAlarmTime());
-
-            editBtn.setOnClickListener(new View.OnClickListener() {
+            convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
-                    toEditScreen(view, theData, position);
+                public void onClick(View v) {
+                    toEditScreen(position);
                 }
             });
+
+            message = convertView.findViewById(R.id.message);
+            alarmTime = convertView.findViewById(R.id.alarmTime);
+            deleteIcon = convertView.findViewById(R.id.delete_icon);
+            message.setText(theData.get(position).getMessage());
+            alarmTime.setText(theData.get(position).getAlarmDate() + " at " + theData.get(position).getAlarmTime());
+
+            deleteIcon.setVisibility(AllReminders.getInstance().getArray().get(position).getDeleteIconVisibility());
+            deleteIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AllReminders.getInstance().getArray().remove(position);
+                    adapter.notifyDataSetChanged();
+                    AllReminders.getInstance().saveToInternalStorage(context);
+                }
+            });
+
 
             return convertView;
         }

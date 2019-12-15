@@ -1,8 +1,11 @@
 package com.example.reminder;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -14,36 +17,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class NewReminder extends AppCompatActivity {
 
-    //DatePicker
+    Context theContext;
     DatePicker datePicker;
-    Button datePickerBtn;
-
-    //TimePicker
     TimePicker timePicker;
-    Button timePickerBtn;
-
-    //Message
     EditText editTextMessage;
-    Button messageBtn;
+    TextView setTimeTV;
+    Button changeTimeNRBtn, datePickerBtn, timePickerBtn, messageBtn, setRemindBtn;
 
-    //Confirm Remind
-    Button setRemindBtn;
-    TextView datePickerRemind;
-    Button timePickerRemind;
-
-    //Remind Object
     Remind temp;
-
-
-    //Make Object to store dates and time
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_reminder);
         temp = new Remind();
+        theContext = getApplicationContext();
 
         setRemindBtn = (Button)findViewById(R.id.setRemindBtn);
 
@@ -86,8 +74,8 @@ public class NewReminder extends AppCompatActivity {
 
         timePicker = (TimePicker)findViewById(R.id.timePicker);
         timePickerBtn = (Button)findViewById(R.id.timePickerBtn);
-        datePickerRemind = (TextView)findViewById(R.id.datePickerRemind);
-        timePickerRemind = (Button  ) findViewById(R.id.timePickerRemind);
+        setTimeTV = (TextView)findViewById(R.id.setTimeTV);
+        changeTimeNRBtn = (Button  ) findViewById(R.id.changeTimeNRBtn);
         timePickerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,11 +92,37 @@ public class NewReminder extends AppCompatActivity {
                 timePickerBtn.setVisibility(View.GONE);
                 editTextMessage.setVisibility(View.VISIBLE);
                 setRemindBtn.setVisibility(View.VISIBLE);
-                datePickerRemind.setVisibility(View.VISIBLE);
-                timePickerRemind.setVisibility(View.VISIBLE);
+                setTimeTV.setVisibility(View.VISIBLE);
+                changeTimeNRBtn.setVisibility(View.VISIBLE);
 
-                datePickerRemind.setText(temp.getAlarmDate() + " at " + temp.getAlarmTime());
-                //broke here
+                setTimeTV.setText(temp.getAlarmDate() + " at " + temp.getAlarmTime());
+
+                editTextMessage.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        temp.setMessage(editTextMessage.getText().toString());
+                    }
+                });
+            }
+        });
+
+        setRemindBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AllReminders.getInstance().addToArray(temp);
+                AllReminders.getInstance().saveToInternalStorage(theContext);
+                Intent intent = new Intent(theContext, MainActivity.class);
+                startActivity(intent);
             }
         });
 

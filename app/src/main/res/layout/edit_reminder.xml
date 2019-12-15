@@ -25,36 +25,29 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="10dp">
+        android:layout_above="@+id/saveChanges"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="13dp"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/remindActivateTime"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp">
 
         </TextView>
 
-        <Button
-            android:id="@+id/changeTimeBtn"
-            android:text="Change time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-        </Button>
     </LinearLayout>
 
     <DatePicker
         android:id="@+id/changeDatePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:visibility="gone"
-        >
+        android:visibility="gone">
 
     </DatePicker>
 
@@ -89,7 +82,30 @@
        >
     </Button>
 
+    <Button
+        android:id="@+id/saveChanges"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:text="Save changes"
+        android:textSize="20dp">
 
+    </Button>
+
+    <Button
+        android:id="@+id/changeTimeBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/saveChanges"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="50dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginRight="11dp"
+        android:layout_marginBottom="2dp"
+        android:text="Change time">
+
+    </Button>
 
 
 </RelativeLayout>
