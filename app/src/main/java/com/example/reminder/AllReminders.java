@@ -9,6 +9,11 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class AllReminders {
+    //In order to access the universal array the has all the reminders use the fallowing code
+    //To get a reminder: AllReminders.getInstance().getArray().get(position of whichever one you are trying to get)
+    //To add a new reminder: AllReminders.getInstance().addToArray(the new Remind object being added)
+    //To save any changes made: AllReminders.getInstance().saveToInternalStorage(theContext which is an object all current activities have)
+
     private static AllReminders mInstance;
     private ArrayList<Remind> list = new ArrayList<Remind>();
 
