@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -18,7 +19,7 @@ public class EditReminder extends AppCompatActivity {
 
     int position;
     Context theContext;
-    TextView remindTimeMade;
+    ImageView alarmIcon;
     EditText remindText;
     TextView remindActivateTime;
     DatePicker changeDatePicker;
@@ -34,19 +35,18 @@ public class EditReminder extends AppCompatActivity {
         theContext = getApplicationContext();
         position = (int)i.getSerializableExtra("position");
 
-        remindTimeMade = findViewById(R.id.remindTimeMade);
         remindText = findViewById(R.id.remindText);
         remindActivateTime = findViewById(R.id.remindActivateTime);
         changeTimeBtn = findViewById(R.id.changeTimeBtn);
         saveChanges = findViewById(R.id.saveChanges);
-
         changeDatePicker = findViewById(R.id.changeDatePicker);
         confirmDateBtn = findViewById(R.id.confirmDateBtn);
         changeTimePicker = findViewById(R.id.changeTimePicker);
         confirmTimeBtn = findViewById(R.id.confirmTimeBtn);
+        alarmIcon = findViewById(R.id.alarmIcon);
 
         remindText.setText(AllReminders.getInstance().getArray().get(position).getMessage());
-        remindActivateTime.setText("Set for: " + AllReminders.getInstance().getArray().get(position).getAlarmDate() + " at " + AllReminders.getInstance().getArray().get(position).getAlarmTime());
+        remindActivateTime.setText(AllReminders.getInstance().getArray().get(position).getAlarmDate() + " at " + AllReminders.getInstance().getArray().get(position).getAlarmTime());
         remindText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -68,10 +68,12 @@ public class EditReminder extends AppCompatActivity {
         changeTimeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                remindTimeMade.setVisibility(View.INVISIBLE);
                 remindText.setVisibility(View.INVISIBLE);
                 remindActivateTime.setVisibility(View.INVISIBLE);
                 changeTimeBtn.setVisibility(View.INVISIBLE);
+                saveChanges.setVisibility(View.INVISIBLE);
+                alarmIcon.setVisibility(View.INVISIBLE);
+
 
                 changeDatePicker.setVisibility(View.VISIBLE);
                 confirmDateBtn.setVisibility(View.VISIBLE);
@@ -81,7 +83,7 @@ public class EditReminder extends AppCompatActivity {
         confirmDateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AllReminders.getInstance().getArray().get(position).setAlarmDate(changeDatePicker.getMonth() + " " + changeDatePicker.getDayOfMonth() + ", " + changeDatePicker.getYear());
+                AllReminders.getInstance().getArray().get(position).setAlarmDate(changeDatePicker.getMonth() + "/" + changeDatePicker.getDayOfMonth() + "/" + changeDatePicker.getYear());
                 changeDatePicker.setVisibility(View.GONE);
                 confirmDateBtn.setVisibility(View.GONE);
 
@@ -98,11 +100,11 @@ public class EditReminder extends AppCompatActivity {
                 changeTimePicker.setVisibility(View.GONE);
                 confirmTimeBtn.setVisibility(View.GONE);
 
-                remindActivateTime.setText("Current alarm time: " + AllReminders.getInstance().getArray().get(position).getAlarmTime());
-                remindTimeMade.setVisibility(View.VISIBLE);
+                remindActivateTime.setText(AllReminders.getInstance().getArray().get(position).getAlarmDate() + " at " + AllReminders.getInstance().getArray().get(position).getAlarmTime());
                 remindText.setVisibility(View.VISIBLE);
                 remindActivateTime.setVisibility(View.VISIBLE);
                 changeTimeBtn.setVisibility(View.VISIBLE);
+                saveChanges.setVisibility(View.VISIBLE);
 
             }
         });

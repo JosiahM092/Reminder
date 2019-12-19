@@ -27,18 +27,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
+            android:maxLines="1"
             >
 
         </TextView>
 
-        <TextView
-            android:id="@+id/alarmTime"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
-            >
+            android:orientation="horizontal">
 
-        </TextView>
+            <ImageView
+                android:id="@+id/alarmIcon"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_shortcut_access_alarms">
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/alarmTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                >
+            </TextView>
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

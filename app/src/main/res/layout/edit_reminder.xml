@@ -9,17 +9,11 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/remindTimeMade"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-        </TextView>
-
         <EditText
             android:id="@+id/remindText"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
 
         </EditText>
     </LinearLayout>
@@ -29,17 +23,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/saveChanges"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="13dp"
+        android:layout_centerHorizontal="true"
         android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/alarmIcon"
+            android:src="@drawable/ic_shortcut_access_alarms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </ImageView>
 
         <TextView
             android:id="@+id/remindActivateTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp">
+            >
 
         </TextView>
+
+        <Button
+            android:id="@+id/changeTimeBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Change time">
+
+        </Button>
 
     </LinearLayout>
 
@@ -47,6 +55,8 @@
         android:id="@+id/changeDatePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
         android:visibility="gone">
 
     </DatePicker>
@@ -54,10 +64,10 @@
     <Button
         android:id="@+id/confirmDateBtn"
         android:text="Confirm Date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/changeDatePicker"
-        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:textSize="20dp"
         android:visibility="gone">
     </Button>
 
@@ -66,7 +76,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_marginTop="5dp"
         android:visibility="gone"
         >
     </TimePicker>
@@ -74,10 +84,10 @@
     <Button
         android:id="@+id/confirmTimeBtn"
         android:text="Confirm Time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/changeTimePicker"
-        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:textSize="20dp"
         android:visibility="gone"
        >
     </Button>
@@ -89,21 +99,6 @@
         android:layout_alignParentBottom="true"
         android:text="Save changes"
         android:textSize="20dp">
-
-    </Button>
-
-    <Button
-        android:id="@+id/changeTimeBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/saveChanges"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginLeft="50dp"
-        android:layout_marginEnd="11dp"
-        android:layout_marginRight="11dp"
-        android:layout_marginBottom="2dp"
-        android:text="Change time">
 
     </Button>
 
