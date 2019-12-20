@@ -13,7 +13,6 @@ public class Remind implements Serializable {
     private String nAlarmTime;
     private String alarmDate;
     private int deleteIconVisibility;
-    private Uri uri;
 
 
     public Remind(){
