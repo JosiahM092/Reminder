@@ -1,5 +1,7 @@
 package com.example.reminder;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +17,8 @@ import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Calendar;
+
 public class EditReminder extends AppCompatActivity {
 
     int position;
@@ -24,6 +28,9 @@ public class EditReminder extends AppCompatActivity {
     TextView remindActivateTime;
     DatePicker changeDatePicker;
     TimePicker changeTimePicker;
+    AlarmManager alarm;
+    Calendar calendar;
+    PendingIntent pendingIntent;
     Button confirmTimeBtn, changeTimeBtn, saveChanges, confirmDateBtn;
 
     @Override
@@ -34,6 +41,7 @@ public class EditReminder extends AppCompatActivity {
         Intent i = getIntent();
         theContext = getApplicationContext();
         position = (int)i.getSerializableExtra("position");
+        calendar = Calendar.getInstance();
 
         remindText = findViewById(R.id.remindText);
         remindActivateTime = findViewById(R.id.remindActivateTime);
@@ -84,6 +92,9 @@ public class EditReminder extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AllReminders.getInstance().getArray().get(position).setAlarmDate(changeDatePicker.getMonth() + "/" + changeDatePicker.getDayOfMonth() + "/" + changeDatePicker.getYear());
+                calendar.set(Calendar.YEAR, changeDatePicker.getYear());
+                calendar.set(Calendar.MONTH, changeDatePicker.getMonth());
+                calendar.set(Calendar.DAY_OF_MONTH, changeDatePicker.getDayOfMonth());
                 changeDatePicker.setVisibility(View.GONE);
                 confirmDateBtn.setVisibility(View.GONE);
 
@@ -97,6 +108,9 @@ public class EditReminder extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AllReminders.getInstance().getArray().get(position).setAlarmTime(changeTimePicker.getHour() + ":" + changeTimePicker.getMinute());
+                calendar.set(Calendar.HOUR_OF_DAY, changeTimePicker.getHour());
+                calendar.set(Calendar.MINUTE, changeTimePicker.getMinute());
+                calendar.set(Calendar.SECOND, 0);
                 changeTimePicker.setVisibility(View.GONE);
                 confirmTimeBtn.setVisibility(View.GONE);
 
@@ -112,6 +126,7 @@ public class EditReminder extends AppCompatActivity {
         saveChanges.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 AllReminders.getInstance().saveToInternalStorage(theContext);
                 Intent intent = new Intent(theContext, MainActivity.class);
                 startActivity(intent);

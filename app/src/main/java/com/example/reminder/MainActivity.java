@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     Context theContext;
     ListView listView;
@@ -31,12 +31,16 @@ public class MainActivity extends AppCompatActivity {
     TextView message, alarmTime;
     ImageView addNewIcon, deleteIcon;
 
+    ArrayList<Remind> temp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         theContext = getApplicationContext();
 
+
+        temp = new ArrayList<Remind>();
         AllReminders.getInstance().overide(readFromInternalStorage());
         AllReminders.getInstance().removeAllDeleteIcons();
 
@@ -50,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         addNewIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //AllReminders.getInstance().overide(temp);
                 AllReminders.getInstance().removeAllDeleteIcons();
                 Intent intent = new Intent(theContext, NewReminder.class);
                 startActivity(intent);
