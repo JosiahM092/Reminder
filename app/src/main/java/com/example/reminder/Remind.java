@@ -1,5 +1,6 @@
 package com.example.reminder;
 
+import android.net.Uri;
 import android.view.View;
 
 import java.io.Serializable;
@@ -12,6 +13,8 @@ public class Remind implements Serializable {
     private String nAlarmTime;
     private String alarmDate;
     private int deleteIconVisibility;
+    private Uri uri;
+
 
     public Remind(){
         deleteIconVisibility = View.GONE;
@@ -33,6 +36,7 @@ public class Remind implements Serializable {
         return deleteIconVisibility;
     }
 
+
     public void setDeleteIconVisibility(int deleteIconVisibility) {
         this.deleteIconVisibility = deleteIconVisibility;
     }
@@ -45,4 +49,5 @@ public class Remind implements Serializable {
         if(Integer.parseInt(at.substring(0, at.indexOf(":"))) > 12) nAlarmTime = Integer.parseInt(at.substring(0, at.indexOf(":"))) - 12 + at.substring(at.indexOf(":")) + "pm";
         else nAlarmTime = at + "am";
     }
+
 }

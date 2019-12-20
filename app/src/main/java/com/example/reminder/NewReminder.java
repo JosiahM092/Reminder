@@ -1,5 +1,7 @@
 package com.example.reminder;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +18,8 @@ import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Calendar;
+
 public class NewReminder extends AppCompatActivity {
 
     Context theContext;
@@ -24,6 +28,9 @@ public class NewReminder extends AppCompatActivity {
     EditText editTextMessage;
     TextView setTimeTV;
     ImageView alarmIcon;
+    Calendar calendar;
+    AlarmManager alarm;
+    PendingIntent alarmIntent;
     Button changeTimeNRBtn, datePickerBtn, timePickerBtn, messageBtn, setRemindBtn;
 
     Remind temp;
@@ -37,6 +44,8 @@ public class NewReminder extends AppCompatActivity {
 
         setRemindBtn = findViewById(R.id.setRemindBtn);
         alarmIcon = findViewById(R.id.alarmIcon);
+        calendar = Calendar.getInstance();
+        alarm = (AlarmManager)getSystemService(ALARM_SERVICE);
 
         //Message
 
@@ -62,6 +71,9 @@ public class NewReminder extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                temp.setAlarmDate(datePicker.getMonth() + "/" + datePicker.getDayOfMonth() + "/" + datePicker.getYear());
+               calendar.set(Calendar.YEAR, datePicker.getYear());
+               calendar.set(Calendar.MONTH, datePicker.getMonth());
+               calendar.set(Calendar.DAY_OF_MONTH, datePicker.getDayOfMonth());
 
                datePicker.setVisibility(View.GONE);
                datePickerBtn.setVisibility(View.GONE);
@@ -90,6 +102,10 @@ public class NewReminder extends AppCompatActivity {
                 else {
                     temp.setAlarmTime(timePicker.getHour() + ":" + timePicker.getMinute());
                 }
+
+                calendar.set(Calendar.HOUR_OF_DAY, timePicker.getHour());
+                calendar.set(Calendar.MINUTE, timePicker.getMinute());
+                calendar.set(Calendar.SECOND, 0);
 
                 timePicker.setVisibility(View.GONE);
                 timePickerBtn.setVisibility(View.GONE);
@@ -137,6 +153,12 @@ public class NewReminder extends AppCompatActivity {
         setRemindBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intentAlarm = new Intent(theContext, AlarmReceiver.class);
+                intentAlarm.putExtra("notificationId", AllReminders.getInstance().getArray().size());
+                intentAlarm.putExtra("todo", temp.getMessage());
+                alarmIntent = PendingIntent.getBroadcast(theContext, AllReminders.getInstance().getArray().size(), intentAlarm, PendingIntent.FLAG_CANCEL_CURRENT);
+                alarm.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(), alarmIntent);
+
                 AllReminders.getInstance().addToArray(temp);
                 AllReminders.getInstance().saveToInternalStorage(theContext);
                 Intent intent = new Intent(theContext, MainActivity.class);
